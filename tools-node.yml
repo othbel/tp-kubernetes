@@ -3,7 +3,7 @@ kind: Node
 metadata:
   name: tools-node
   labels:
-    kubernetes.io/hostname: micro-node
+    kubernetes.io/hostname: tools-node
 spec:
   hostname: tools-node
   podCIDR: 10.20.0.0/24
