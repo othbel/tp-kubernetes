@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: project-env
+data:
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: eureka-server-service.tools # accounts/cards/loans
+  SPRING_CONFIG_IMPORT: config-server-service.tools # accounts/cards/eureka/gateway/loans
+  SPRING_PROFILES_ACTIVE: prod # accounts/cards/configserver!!/loans
+  SPRING_ZIPKIN_BASEURL: zipkin-service.tools # accounts/cards/configserver/eureka/gateway/loans
+

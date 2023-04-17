@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deploy
+  namespace: tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: othbel/gatewayserver:1.0.0
+        env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            valueFrom:
+              configMapKeyRef:
+                name: project-env
+                key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          - name: SPRING_CONFIG_IMPORT
+            valueFrom:
+              configMapKeyRef:
+                name: project-env
+                key: SPRING_CONFIG_IMPORT
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: project-env
+                key: SPRING_PROFILES_ACTIVE
+          - name: SPRING_ZIPKIN_BASEURL
+            valueFrom:
+              configMapKeyRef:
+                name: project-env
+                key: SPRING_ZIPKIN_BASEURL
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 8072
