@@ -5,5 +5,5 @@ metadata:
   labels:
     kubernetes.io/hostname: tools-node
 spec:
-  hostname: tools-node
+  # hostname: tools-node
   podCIDR: 10.20.0.0/24
