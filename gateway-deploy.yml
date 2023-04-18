@@ -31,11 +31,6 @@ spec:
               configMapKeyRef:
                 name: micro-env
                 key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-          - name: EUREKA_CLIENT
-            valueFrom:
-              configMapKeyRef:
-                name: micro-env
-                key: EUREKA_CLIENT
           - name: SPRING_CONFIG_IMPORT
             valueFrom:
               configMapKeyRef:
