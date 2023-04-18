@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gateway-deploy
-  namespace: tools
+  namespace: micro
 spec:
   replicas: 1
   selector:
@@ -13,6 +13,15 @@ spec:
       labels:
         app: gateway
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: role
+                    operator: In
+                    values:
+                      - tools
       containers:
       - name: gateway
         image: othbel/gatewayserver:1.0.0
@@ -20,22 +29,27 @@ spec:
           - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
             valueFrom:
               configMapKeyRef:
-                name: project-env
+                name: micro-env
                 key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          - name: EUREKA_CLIENT
+            valueFrom:
+              configMapKeyRef:
+                name: micro-env
+                key: EUREKA_CLIENT
           - name: SPRING_CONFIG_IMPORT
             valueFrom:
               configMapKeyRef:
-                name: project-env
+                name: micro-env
                 key: SPRING_CONFIG_IMPORT
           - name: SPRING_PROFILES_ACTIVE
             valueFrom:
               configMapKeyRef:
-                name: project-env
+                name: micro-env
                 key: SPRING_PROFILES_ACTIVE
           - name: SPRING_ZIPKIN_BASEURL
             valueFrom:
               configMapKeyRef:
-                name: project-env
+                name: micro-env
                 key: SPRING_ZIPKIN_BASEURL
         # resources:
         #   limits:

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zipkin-deploy
-  namespace: tools
+  namespace: micro
 spec:
   selector:
     matchLabels:
@@ -12,6 +12,15 @@ spec:
       labels:
         app: zipkin
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: role
+                    operator: In
+                    values:
+                      - tools
       containers:
       - name: zipkin
         image: openzipkin/zipkin:latest

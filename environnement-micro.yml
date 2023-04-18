@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: micro-env
+  namespace: micro
+data:
+  # EUREKA_CLIENT: http://eureka-server-service
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server-service.micro:8070/eureka/ # accounts/cards/loans
+  SPRING_CONFIG_IMPORT: configserver:http://config-server-service.micro:8071 # accounts/cards/eureka/gateway/loans
+  SPRING_PROFILES_ACTIVE: prod # accounts/cards/configserver!!/loans
+  SPRING_ZIPKIN_BASEURL: http://zipkin-service.micro:9411 # accounts/cards/configserver/eureka/gateway/loans
+

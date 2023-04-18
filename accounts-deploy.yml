@@ -18,10 +18,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: kubernetes.io/hostname
+                  - key: role
                     operator: In
                     values:
-                      - micro-node
+                      - micro
       containers:
       - name: accounts-api
         image: othbel/accounts-api:1.0.0
@@ -29,22 +29,22 @@ spec:
           - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
             valueFrom:
               configMapKeyRef:
-                name: project-env
+                name: micro-env
                 key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
           - name: SPRING_CONFIG_IMPORT
             valueFrom:
               configMapKeyRef:
-                name: project-env
+                name: micro-env
                 key: SPRING_CONFIG_IMPORT
           - name: SPRING_PROFILES_ACTIVE
             valueFrom:
               configMapKeyRef:
-                name: project-env
+                name: micro-env
                 key: SPRING_PROFILES_ACTIVE
           - name: SPRING_ZIPKIN_BASEURL
             valueFrom:
               configMapKeyRef:
-                name: project-env
+                name: micro-env
                 key: SPRING_ZIPKIN_BASEURL
         # resources:
         #   limits:

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: config-server-deploy
-  namespace: tools
+  namespace: micro
 spec:
   replicas: 1
   selector:
@@ -16,6 +16,17 @@ spec:
       containers:
       - name: config-server
         image: othbel/configserver:1.0.0
+        env:
+          - name: SPRING_ZIPKIN_BASEURL
+            valueFrom:
+              configMapKeyRef:
+                name: micro-env
+                key: SPRING_ZIPKIN_BASEURL
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: micro-env
+                key: SPRING_PROFILES_ACTIVE
         # resources:
         #   limits:
         #     memory: "128Mi"
